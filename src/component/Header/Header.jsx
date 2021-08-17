@@ -1,25 +1,46 @@
 // react
-import React, { memo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 // redux
 import { useDispatch } from 'react-redux';
 import { MenuOpenClose } from '../../action';
 
-// imag
+// img
 import logo from './img/logo.png';
 
 // css
 import './Header.css';
 
-const Header = memo(() => {
 
+const Header = () => {
+
+  const history = useHistory();
   const dispatch = useDispatch();
   const menuOpenClose = () => { dispatch(MenuOpenClose()) };
+  const [ Text, setText ] = useState('');
+  const getStorage = (item) => { return JSON.parse(window.localStorage.getItem(item)) }
+  const setStorage = (item, value) => { window.localStorage.setItem(item, JSON.stringify(value)) }
 
-  const Prevent = (event) => {
-    event.preventDefault();
+  const onHandlerText = (event) => {
+    setText(event.currentTarget.value);
   }
+  const submit = (event) => {
+    event.preventDefault();
+
+    if ( Text === '' ) {
+      alert('검색어를 입력해주세요');
+    } else {
+      setStorage('text', Text);
+      history.push('/Search');
+      window.location.reload();
+    }
+  }
+
+  useEffect(() => {
+    setText(getStorage('text'));
+  }, [getStorage('text')]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return(
     <header>
@@ -39,13 +60,13 @@ const Header = memo(() => {
         <img src={logo} alt='Youtube' />
       </Link>
 
-      <form>
+      <form onSubmit={submit}>
         <div className='inputWrap'>
-          <input type='text' placeholder='검색'/>
-          <button className='keyboardButton' onClick={Prevent}><i className='fas fa-keyboard'></i></button>
+          <input type='text' placeholder='검색' value={Text} onChange={onHandlerText} />
+          <button className='keyboardButton'><i className='fas fa-keyboard'></i></button>
         </div>
-        <button className='searchButton' onClick={Prevent}><i className='fas fa-search'></i></button>
-        <button className='voiceButton' onClick={Prevent}><i className='fas fa-microphone'></i></button>
+        <button className='searchButton' onClick={submit}><i className='fas fa-search'></i></button>
+        <button className='voiceButton'><i className='fas fa-microphone'></i></button>
       </form>
 
       <div className='rightBox'>
@@ -57,6 +78,6 @@ const Header = memo(() => {
     </header>
   )
 
-});
+};
 
 export default Header;

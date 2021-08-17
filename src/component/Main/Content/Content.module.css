@@ -1,0 +1,4 @@
+@charset "utf-8";
+
+.content{width: 100%; height: 100vh; transition: .3s; position: absolute; top: 0; left: 0; background: #131313;}
+.content.open{width: calc(100% - 72px); left: 72px;}

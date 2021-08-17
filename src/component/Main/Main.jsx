@@ -5,9 +5,6 @@ import React from 'react';
 import Menu from './Menu/Menu';
 import Content from './Content/Content';
 
-// css
-import './Main.css';
-
 
 const Main = ({ name }) => {
 

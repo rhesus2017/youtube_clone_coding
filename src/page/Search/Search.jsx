@@ -6,10 +6,10 @@ import Header from '../../component/Header/Header';
 import Main from '../../component/Main/Main';
 import Footer from '../../component/Footer/Footer';
 
-const Detail = ({ name }) => {
+const Search = ({ name }) => {
 
   return(
-    <div className={name}>
+    <div>
       <Header />
       <Main name={name} />
       <Footer />
@@ -18,4 +18,4 @@ const Detail = ({ name }) => {
 
 }
 
-export default Detail;
+export default Search;

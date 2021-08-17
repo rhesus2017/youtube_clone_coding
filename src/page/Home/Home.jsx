@@ -9,7 +9,7 @@ import Footer from '../../component/Footer/Footer';
 const Home = ({ name }) => {
 
   return(
-    <div className={name}>
+    <div>
       <Header />
       <Main name={name} />
       <Footer />

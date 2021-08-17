@@ -1,4 +1,5 @@
 import { MENU_OPEN_CLOSE } from "../action";
+import { SET_TEXT } from "../action";
 import { combineReducers } from 'redux';
 
 
@@ -16,9 +17,23 @@ const MenuOpenClose = (state = MenuOpenCloseInit, action) => {
     }
 }
 
+let SetTextInit = {
+    text: ''
+};
+const SetText = (state = SetTextInit, action) => {
+    switch(action.type) {
+        case SET_TEXT:
+            return {
+                ...state, text: action.payload
+            };
+        default:
+            return state;
+    }
+}
+
 
 const ReducersApp = combineReducers({
-    MenuOpenClose
+    MenuOpenClose, SetText
 });
 
 

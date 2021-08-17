@@ -1,23 +1,25 @@
 // react
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 // component
 import ListCard from './ListCard/ListCard';
 import Category from './Category/Category';
 
 // css
-import styles from './Home.module.css';
+import styles from './Search.module.css';
 
 // hook
-import useFetch from '../../../../hook/useFetch';
+import useFetch from '../../../../hook/useSearch';
 
 
-const Home = () => {
+const Search = () => {
 
-  const [ ListCount, setListCount ] = useState(20);
+  const history = useHistory();
   const Target = useRef(null);
-  const { Lists } = useFetch(ListCount);
-  const setStorage = (item, value) => { window.localStorage.setItem(item, JSON.stringify(value)) }
+  const getStorage = (item) => { return JSON.parse(window.localStorage.getItem(item)) }
+  const [ ListCount, setListCount ] = useState(20);
+  const { Lists } = useFetch(ListCount, getStorage('text'));
 
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
@@ -39,8 +41,12 @@ const Home = () => {
   }, [ListCount])
 
   useEffect(() => {
-    setStorage('text', '');
-  }, []);
+    if ( getStorage('text') === '' ) {
+      history.push('/')
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
 
   return(
     <React.Fragment>
@@ -57,4 +63,4 @@ const Home = () => {
     
 }
 
-export default Home;
+export default Search;

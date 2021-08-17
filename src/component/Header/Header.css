@@ -23,8 +23,8 @@ header > form > .inputWrap > input{width: calc(100% - 40px); height: 100%; backg
 header > form > .inputWrap > input::placeholder{color: #aaa;}
 header > form > .inputWrap > .keyboardButton{width: 40px; height: 100%; position: relative; background: none; box-shadow: none; border: none; cursor: pointer;}
 header > form > .inputWrap > .keyboardButton > svg{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #999; font-size: 1.6rem}
-header > form > .searchButton{width: 65px; height: 100%; float: left; background: rgb(48, 48, 48); box-shadow: none; border: none; cursor: pointer;}
-header > form > .searchButton > svg{color: #999;}
+header > form > .searchButton{width: 65px; height: 100%; float: left; background: rgb(48, 48, 48); box-shadow: none; border: none; cursor: pointer; line-height: 32px; text-align: center;}
+header > form > .searchButton > svg{color: #999; font-size: 1.4rem;}
 header > form > .voiceButton{float: left; background: none; box-shadow: none; border: none; width: 40px; height: 100%;  cursor: pointer;}
 header > form > .voiceButton > svg{color: #fff; font-size: 1.8rem}
 

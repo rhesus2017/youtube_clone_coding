@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // css
-import './Menu.css';
+import styles from './Menu.module.css';
 
 
 const Menu = () => {
@@ -15,11 +15,18 @@ const Menu = () => {
   const MenuOpenClose = useSelector(state => state.MenuOpenClose);
 
   return(
-    <nav className={MenuOpenClose.open ? 'subNav open' : 'subNav'}>
-      <ul>
+    <nav className={MenuOpenClose.open ? `${styles.subNav} ${styles.open}` : styles.subNav}>
+      <ul className={styles.ul}>
         {
           Menus.map((Menu, index) => {
-            return <li key={index} className={ActiveMenu === index ? 'active' : ''} onClick={() => setActiveMenu(index)}><p><i className={Menu.icon}></i><span>{Menu.name}</span></p></li>
+            return (
+              <li key={index} className={ActiveMenu === index ? `${styles.li} ${styles.active}` : styles.li} onClick={() => setActiveMenu(index)}>
+                <p className={styles.p}>
+                  <i className={`${Menu.icon} ${styles.svg}`}></i>
+                  <span className={styles.span}>{Menu.name}</span>
+                </p>
+              </li>
+            )
           })
         }
       </ul>
