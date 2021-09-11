@@ -27,7 +27,7 @@ const Home = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const option = { rootMargin: "10px", threshold: 0 };
+    const option = { rootMargin: "10px", threshold: 1 };
     const observer = new IntersectionObserver(handleObserver, option);
     if (Target.current) observer.observe(Target.current);
   }, [handleObserver]);
