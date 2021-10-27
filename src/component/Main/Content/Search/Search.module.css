@@ -1,3 +1,4 @@
 @charset "utf-8";
 
 .list{padding: 24px 32px 0 48px; background: #131313;}
+.noresult{position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 2rem;}

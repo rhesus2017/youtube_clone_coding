@@ -1,7 +1,6 @@
 // react
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
 
 // redux
 import { useDispatch } from 'react-redux';
@@ -16,7 +15,6 @@ import './Header.css';
 
 const Header = () => {
 
-  const history = useHistory();
   const dispatch = useDispatch();
   const menuOpenClose = () => { dispatch(MenuOpenClose()) };
   const [ Text, setText ] = useState('');
@@ -26,21 +24,29 @@ const Header = () => {
   const onHandlerText = (event) => {
     setText(event.currentTarget.value);
   }
-  const submit = (event) => {
+  const onPreventHandler = (event) => {
     event.preventDefault();
+  }
+
+  const onSubmitHandler = (event) => {
 
     if ( Text === '' ) {
       alert('검색어를 입력해주세요');
     } else {
       setStorage('text', Text);
-      history.push('/Search');
-      window.location.reload();
+      window.location.replace('/Search');
     }
   }
 
   useEffect(() => {
     setText(getStorage('text'));
   }, [getStorage('text')]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      onSubmitHandler()
+    }
+  }
 
   return(
     <header>
@@ -60,12 +66,12 @@ const Header = () => {
         <img src={logo} alt='Youtube' />
       </Link>
 
-      <form onSubmit={submit}>
+      <form onSubmit={onPreventHandler}>
         <div className='inputWrap'>
-          <input type='text' placeholder='검색' value={Text} onChange={onHandlerText} />
+          <input type='text' placeholder='검색' value={Text} onChange={onHandlerText} onKeyPress={onKeyPress} />
           <button className='keyboardButton'><i className='fas fa-keyboard'></i></button>
         </div>
-        <button className='searchButton' onClick={submit}><i className='fas fa-search'></i></button>
+        <button className='searchButton' onClick={onSubmitHandler}><i className='fas fa-search'></i></button>
         <button className='voiceButton'><i className='fas fa-microphone'></i></button>
       </form>
 

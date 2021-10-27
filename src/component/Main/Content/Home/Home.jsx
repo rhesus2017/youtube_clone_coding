@@ -14,15 +14,18 @@ import useFetch from '../../../../hook/useFetch';
 
 const Home = () => {
 
-  const [ ListCount, setListCount ] = useState(20);
-  const Target = useRef(null);
-  const { Lists } = useFetch(ListCount);
+  const getStorage = (item) => { return JSON.parse(window.localStorage.getItem(item)) }
   const setStorage = (item, value) => { window.localStorage.setItem(item, JSON.stringify(value)) }
-
+  const [ ListCount, setListCount ] = useState(20);
+  const { Lists } = useFetch(ListCount);
+  const Target = useRef(null);
+  
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      setListCount(prev => prev + 20);
+      if ( getStorage('ListCount') < 100 ) {
+        setListCount(prev => prev + 20);
+      }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -33,12 +36,8 @@ const Home = () => {
   }, [handleObserver]);
 
   useEffect(() => {
-    if ( ListCount >= 120 ) {
-      setListCount(120);
-    }
-  }, [ListCount])
-
-  useEffect(() => {
+    window.onbeforeunload = function() { window.scrollTo(0, 0); }
+    setStorage('ListCount', 0);
     setStorage('text', '');
   }, []);
 
@@ -50,8 +49,8 @@ const Home = () => {
         {[...Array(ListCount)].map((number, index) => { return <ListCard key={index} List={Lists[index]}/> })}
       </div>
 
-      <div ref={Target} className={styles.ref}></div>
-
+      <div ref={Target}></div>
+      
     </React.Fragment>
   )
     

@@ -10,42 +10,40 @@ import Category from './Category/Category';
 import styles from './Search.module.css';
 
 // hook
-import useFetch from '../../../../hook/useSearch';
+import useSearch from '../../../../hook/useSearch';
 
 
 const Search = () => {
 
-  const history = useHistory();
-  const Target = useRef(null);
   const getStorage = (item) => { return JSON.parse(window.localStorage.getItem(item)) }
+  const setStorage = (item, value) => { window.localStorage.setItem(item, JSON.stringify(value)) }
   const [ ListCount, setListCount ] = useState(20);
-  const { Lists } = useFetch(ListCount, getStorage('text'));
-
+  const { Lists } = useSearch(ListCount, getStorage('text'));
+  const Target = useRef(null);
+  const history = useHistory();
+  
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      setListCount(prev => prev + 20);
+      if ( getStorage('ListCount') < 100 ) {
+        setListCount(prev => prev + 20);
+      }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const option = { rootMargin: "10px", threshold: 0 };
+    const option = { rootMargin: "10px", threshold: 1 };
     const observer = new IntersectionObserver(handleObserver, option);
     if (Target.current) observer.observe(Target.current);
   }, [handleObserver]);
 
   useEffect(() => {
-    if ( ListCount >= 120 ) {
-      setListCount(120);
-    }
-  }, [ListCount])
-
-  useEffect(() => {
+    window.onbeforeunload = function() { window.scrollTo(0, 0); }
+    setStorage('ListCount', 0);
     if ( getStorage('text') === '' ) {
       history.push('/')
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 
   return(
@@ -55,7 +53,7 @@ const Search = () => {
       <div className={styles.list}>
         {[...Array(ListCount)].map((number, index) => { return <ListCard key={index} List={Lists[index]}/> })}
       </div>
-
+      
       <div ref={Target} className={styles.ref}></div>
 
     </React.Fragment>

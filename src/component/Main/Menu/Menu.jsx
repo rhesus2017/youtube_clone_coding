@@ -10,7 +10,7 @@ import styles from './Menu.module.css';
 
 const Menu = () => {
 
-  const Menus = [ { name: '홈', icon: 'fas fa-home'}, { name: '탐색', icon: 'fas fa-eye'}, { name: '구독', icon: 'fas fa-star'}, { name: '보관함', icon: 'fas fa-box'}, { name: '시청 기록', icon: 'fas fa-history'} ];
+  const Menus = [ { name: '홈', icon: 'fas fa-home'}, { name: '탐색', icon: 'fas fa-eye'}, { name: '구독', icon: 'fas fa-star'}, { name: '보관함', icon: 'fas fa-box'}, { name: '시청 기록', icon: 'fas fa-history'} ];
   const [ ActiveMenu, setActiveMenu ] = useState(0);
   const MenuOpenClose = useSelector(state => state.MenuOpenClose);
 
